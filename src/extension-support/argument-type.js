@@ -60,7 +60,7 @@ const ArgumentType = {
     VARIABLE: 'variable',
 
     /**
-     * Name of broadcasts in the project
+     * Name of broadcast in the project
      */
     BROADCAST: 'broadcast'
 };
