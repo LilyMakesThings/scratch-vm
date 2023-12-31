@@ -54,12 +54,13 @@ const ArgumentType = {
     SOUND: 'sound',
     
     /**
-     * Name of costume in the current target
+     * Name of variable in the current target
+     * (Can be a list of variables, lists, and broadcasts)
      */
     VARIABLE: 'variable',
 
     /**
-     * Name of sound in the current target
+     * Name of broadcasts in the project
      */
     BROADCAST: 'broadcast'
 };
