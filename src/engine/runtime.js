@@ -1326,8 +1326,9 @@ class Runtime extends EventEmitter {
         const iconURI = blockInfo.blockIconURI || categoryInfo.blockIconURI;
 
         if (iconURI) {
-            // TODO: Don't push this if scratch_extension already exists.
-            blockJSON.extensions.push('scratch_extension');
+            if (!blockJSON.extensions.includes('scratch_extension')) {
+                blockJSON.extensions.push('scratch_extension');
+            }
             blockJSON.message0 = '%1 %2';
             const iconJSON = {
                 type: 'field_image',
