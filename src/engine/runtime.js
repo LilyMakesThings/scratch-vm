@@ -1560,8 +1560,11 @@ class Runtime extends EventEmitter {
         return {
             type: 'field_variable',
             name: placeholder,
-            variableTypes: 
-                argInfo.variableTypes ? (Array.isArray(argInfo.variableTypes) ? argInfo.variableTypes : [argInfo.variableTypes]) : [''],
+            variableTypes:
+                argInfo.variableTypes 
+                ? (Array.isArray(argInfo.variableTypes) 
+                   ? argInfo.variableTypes : [argInfo.variableTypes]) 
+                : [''],
             variable: (argInfo.variableTypes === 'broadcast_msg') ? 'message1' : null
         };
     }
