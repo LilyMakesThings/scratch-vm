@@ -190,6 +190,9 @@ class VirtualMachine extends EventEmitter {
         this.runtime.on(Runtime.COMPILE_ERROR, (target, error) => {
             this.emit(Runtime.COMPILE_ERROR, target, error);
         });
+        this.runtime.on(Runtime.ASSET_PROGRESS, (finished, total) => {
+            this.emit(Runtime.ASSET_PROGRESS, finished, total);
+        });
         this.runtime.on(Runtime.TURBO_MODE_OFF, () => {
             this.emit(Runtime.TURBO_MODE_OFF);
         });
@@ -650,7 +653,7 @@ class VirtualMachine extends EventEmitter {
      * @returns {Promise} Promise that resolves after the project has loaded
      */
     fromJSON (json) {
-        log.warning('fromJSON is now just a wrapper around loadProject, please use that function instead.');
+        log.warn('fromJSON is now just a wrapper around loadProject, please use that function instead.');
         return this.loadProject(json);
     }
 

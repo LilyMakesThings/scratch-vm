@@ -157,7 +157,7 @@ for (const Extension of [TestExtensionUsingReturn, TestExtensionUsingStartBranch
                     if (text === 'OK!') {
                         okayCount++;
                     } else if (text === 'end') {
-                        vm.stop();
+                        vm.quit();
                         t.equal(okayCount, 5);
                         t.end();
                     } else {
@@ -184,9 +184,36 @@ for (const Extension of [TestExtensionUsingReturn, TestExtensionUsingStartBranch
 
             vm.loadProject(fs.readFileSync(path.join(__dirname, '../fixtures/tw-loop.sb3'))).then(() => {
                 vm.runtime.on('SAY', (target, type, text) => {
-                    vm.stop();
+                    vm.quit();
                     t.equal(text, 'a 3 b 12 c 48 frames 64');
                     t.end();
+                });
+
+                vm.greenFlag();
+                vm.start();
+            });
+        });
+
+        test(`beyond branchCount - ${Extension.name} - ${compilerEnabled ? 'compiled' : 'interpreted'}`, t => {
+            t.plan(1);
+
+            const vm = new VirtualMachine();
+            vm.setCompilerOptions({
+                enabled: compilerEnabled
+            });
+            vm.extensionManager.addBuiltinExtension('loopsAndThings', Extension);
+            vm.runtime.on('COMPILE_ERROR', () => {
+                t.fail('Compile error');
+            });
+
+            vm.loadProject(fs.readFileSync(path.join(__dirname, '../fixtures/tw-beyond-branchCount.sb3'))).then(() => {
+                vm.runtime.on('SAY', (target, type, text) => {
+                    if (text === 'BeyondBranchCount') {
+                        t.pass('BeyondBranchCount');
+                    } else if (text === 'end') {
+                        vm.quit();
+                        t.end();
+                    }
                 });
 
                 vm.greenFlag();
