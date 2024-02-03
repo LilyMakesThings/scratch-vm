@@ -126,6 +126,15 @@ const ArgumentTypeMap = (() => {
     return map;
 })();
 
+const FieldTypeMap = (() => {
+    const map = {};
+    map[ArgumentType.ANGLE] = "field_angle";
+    map[ArgumentType.NUMBER] = "field_number";
+    map[ArgumentType.STRING] = "field_input";
+    map[ArgumentType.NOTE] = "field_note";
+    return map;
+})();
+
 /**
  * A pair of functions used to manage the cloud variable limit,
  * to be used when adding (or attempting to add) or removing a cloud variable.
@@ -1635,7 +1644,7 @@ class Runtime extends EventEmitter {
             let fieldName;
             if (argInfo.menu) {
                 const menuInfo = context.categoryInfo.menuInfo[argInfo.menu];
-                if (menuInfo.acceptReporters) {
+                if (menuInfo.acceptReporters || argInfo.acceptReporters) {
                     valueName = placeholder;
                     shadowType = this._makeExtensionMenuId(argInfo.menu, context.categoryInfo.id);
                     fieldName = argInfo.menu;
@@ -1646,6 +1655,11 @@ class Runtime extends EventEmitter {
                     shadowType = null;
                     fieldName = placeholder;
                 }
+            } else if (argInfo.acceptReporters === false && FieldTypeMap[argInfo.type]) {
+                argJSON.type = FieldTypeMap[argInfo.type];
+                valueName = null;
+                shadowType = null;
+                fieldName = placeholder;
             } else {
                 valueName = placeholder;
                 shadowType = (argTypeInfo.shadow && argTypeInfo.shadow.type) || null;
