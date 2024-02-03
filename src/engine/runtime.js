@@ -128,10 +128,10 @@ const ArgumentTypeMap = (() => {
 
 const FieldTypeMap = (() => {
     const map = {};
-    map[ArgumentType.ANGLE] = "field_angle";
-    map[ArgumentType.NUMBER] = "field_number";
-    map[ArgumentType.STRING] = "field_input";
-    map[ArgumentType.NOTE] = "field_note";
+    map[ArgumentType.ANGLE] = 'field_angle';
+    map[ArgumentType.NUMBER] = 'field_number';
+    map[ArgumentType.STRING] = 'field_input';
+    map[ArgumentType.NOTE] = 'field_note';
     return map;
 })();
 
