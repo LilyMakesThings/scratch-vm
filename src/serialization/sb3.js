@@ -1146,6 +1146,17 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
         for (const blockId in object.blocks) {
             if (!Object.prototype.hasOwnProperty.call(object.blocks, blockId)) continue;
             const blockJSON = object.blocks[blockId];
+            const parent = object.blocks[blockJSON.parent];
+            if (
+                // TW: Scratch-Blocks 2.0 doesn't use shadows for procedure prototypes.
+                blockJSON.opcode === 'procedures_prototype' ||
+                // If we're an argument reporter inside of a prototype:
+                ((blockJSON.opcode === 'argument_reporter_string_number' ||
+                blockJSON.opcode === 'argument_reporter_boolean') &&
+                parent && parent.opcode === 'procedures_prototype')
+            ){
+                blockJSON.shadow = true;
+            }
             blocks.createBlock(blockJSON);
 
             // If the block is from an extension, record it.
