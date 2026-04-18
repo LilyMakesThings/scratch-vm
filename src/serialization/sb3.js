@@ -1151,8 +1151,7 @@ const parseScratchObject = function (object, runtime, extensions, zip, assets) {
                 // TW: Scratch-Blocks 2.0 doesn't use shadows for procedure prototypes.
                 blockJSON.opcode === 'procedures_prototype' ||
                 // If we're an argument reporter inside of a prototype:
-                ((blockJSON.opcode === 'argument_reporter_string_number' ||
-                blockJSON.opcode === 'argument_reporter_boolean') &&
+                (blockJSON.opcode.startsWith('argument_reporter_') &&
                 parent && parent.opcode === 'procedures_prototype')
             ){
                 blockJSON.shadow = true;
