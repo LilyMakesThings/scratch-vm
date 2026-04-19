@@ -1127,7 +1127,10 @@ const fixSporkCompatibility = function (blocks) {
         // Our scratch-blocks relies on it being shadow: true to prevent moving, so we'll force it to be that way.
         if (block.opcode === 'procedures_prototype') {
             block.shadow = true;
-        } else if (block.opcode.startsWith('argument_reporter_')) {
+        } else if (
+            block.opcode === 'argument_reporter_string_number' ||
+            block.opcode === 'argument_reporter_boolean'
+        ) {
             const parent = blocks[block.parent];
             if (parent && parent.opcode === 'procedures_prototype') {
                 block.shadow = true;
