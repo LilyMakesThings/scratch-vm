@@ -1116,7 +1116,7 @@ const parseScratchAssets = function (object, runtime, zip) {
 
 /**
  * Fix various backwards-incompatible changes that Scratch made in the spork migration.
- * @param {object} blocks The hydrated block dictionary for a target. Mutated in place.
+ * @param {object} blocks Blocks, mutated in-place.
  */
 const fixSporkCompatibility = function (blocks) {
     for (const blockId in blocks) {
